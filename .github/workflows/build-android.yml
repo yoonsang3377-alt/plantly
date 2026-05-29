@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.jsh
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -38,10 +38,16 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
-      - name: Fix Kotlin dependency conflict
+      - name: Fix Kotlin duplicate class conflict
         run: |
-          echo "kotlin.stdlib.default.dependency=false" >> android/gradle.properties
-          echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
+          python3 - << 'PYEOF'
+          with open('android/app/build.gradle', 'r') as f:
+              content = f.read()
+          fix = "\nconfigurations.all {\n    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'\n    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'\n}\n"
+          with open('android/app/build.gradle', 'w') as f:
+              f.write(fix + content)
+          print("Fixed android/app/build.gradle")
+          PYEOF
 
       - name: Copy web assets
         run: npx cap copy android
