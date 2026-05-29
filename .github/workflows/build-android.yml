@@ -38,6 +38,11 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
+      - name: Fix Kotlin dependency conflict
+        run: |
+          echo "kotlin.stdlib.default.dependency=false" >> android/gradle.properties
+          echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
+
       - name: Copy web assets
         run: npx cap copy android
 
