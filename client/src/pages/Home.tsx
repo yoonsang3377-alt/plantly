@@ -50,8 +50,25 @@ export default function Home() {
     setImageFile(file);
     setResult(null);
     setSaved(false);
+    // 모바일 대용량 사진 자동 압축 (최대 1600px, quality 0.85)
     const reader = new FileReader();
-    reader.onload = (e) => setImagePreview(e.target?.result as string);
+    reader.onload = (e) => {
+      const src = e.target?.result as string;
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 1600;
+        let { width, height } = img;
+        if (width > MAX || height > MAX) {
+          if (width > height) { height = Math.round(height * MAX / width); width = MAX; }
+          else { width = Math.round(width * MAX / height); height = MAX; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width; canvas.height = height;
+        canvas.getContext("2d")!.drawImage(img, 0, 0, width, height);
+        setImagePreview(canvas.toDataURL("image/jpeg", 0.85));
+      };
+      img.src = src;
+    };
     reader.readAsDataURL(file);
   };
 
