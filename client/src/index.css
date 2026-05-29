@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Cabinet Grotesk', system-ui, sans-serif;
+    --font-body: 'Satoshi', system-ui, sans-serif;
+
+    --background: 120 20% 98%;
+    --foreground: 140 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 140 25% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 140 25% 10%;
+
+    --primary: 142 65% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 142 30% 92%;
+    --secondary-foreground: 142 65% 25%;
+    --muted: 120 15% 94%;
+    --muted-foreground: 140 10% 46%;
+    --accent: 142 30% 92%;
+    --accent-foreground: 142 65% 25%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 120 15% 88%;
+    --input: 120 15% 88%;
+    --ring: 142 65% 35%;
+    --radius: 0.875rem;
+  }
+
+  .dark {
+    --background: 140 20% 7%;
+    --foreground: 120 15% 92%;
+    --card: 140 18% 11%;
+    --card-foreground: 120 15% 92%;
+    --popover: 140 18% 11%;
+    --popover-foreground: 120 15% 92%;
+    --primary: 142 55% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 142 20% 18%;
+    --secondary-foreground: 142 45% 75%;
+    --muted: 140 15% 16%;
+    --muted-foreground: 120 10% 55%;
+    --accent: 142 20% 18%;
+    --accent-foreground: 142 45% 75%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 140 15% 20%;
+    --input: 140 15% 20%;
+    --ring: 142 55% 45%;
+  }
+
+  * { @apply border-border; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-family: var(--font-body); }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(142, 65%, 32%), hsl(160, 60%, 40%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(160deg,
+      hsl(140, 40%, 96%) 0%,
+      hsl(160, 35%, 93%) 100%
+    );
+  }
+  .dark .hero-gradient {
+    background: linear-gradient(160deg,
+      hsl(140, 30%, 9%) 0%,
+      hsl(160, 25%, 8%) 100%
+    );
+  }
+
+  /* Upload zone */
+  .upload-zone {
+    border: 2px dashed hsl(var(--border));
+    border-radius: var(--radius);
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.04);
+  }
+
+  /* Difficulty badge */
+  .badge-easy { @apply bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400; }
+  .badge-medium { @apply bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400; }
+  .badge-hard { @apply bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400; }
+
+  /* Card hover */
+  .plant-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .plant-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px -8px hsl(142 65% 35% / 0.2);
+  }
+
+  /* Shimmer */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .shimmer {
+    background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--border)) 50%, hsl(var(--muted)) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius);
+  }
+
+  /* Water progress */
+  .water-bar { @apply h-2 rounded-full bg-muted overflow-hidden; }
+  .water-fill {
+    @apply h-full rounded-full transition-all duration-500;
+    background: linear-gradient(90deg, hsl(200, 80%, 55%), hsl(210, 75%, 50%));
+  }
+
+  /* Ad slot */
+  .ad-slot {
+    background: hsl(var(--muted));
+    border: 1px dashed hsl(var(--border));
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.75rem;
+  }
+
+  /* Pulse animation for scanning */
+  @keyframes scan-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+  }
+  .scan-pulse { animation: scan-pulse 1.5s ease-in-out infinite; }
+}
