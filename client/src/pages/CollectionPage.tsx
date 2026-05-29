@@ -218,7 +218,7 @@ export default function CollectionPage() {
             { label: "자동 물주기 기기", keyword: "자동 물주기" },
           ].map(item => (
             <a key={item.label}
-              href={`https://www.coupang.com/np/search?q=${encodeURIComponent(item.keyword)}`}
+              href={`https://link.coupang.com/a/AF9884339?url=${encodeURIComponent('https://www.coupang.com/np/search?q=' + encodeURIComponent(item.keyword))}`}
               target="_blank" rel="noopener noreferrer sponsored"
               className="flex items-center justify-between p-3 rounded-lg hover:bg-muted transition-colors text-sm group mb-1"
             >

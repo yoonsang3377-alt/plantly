@@ -335,7 +335,7 @@ export default function Home() {
                   🛒 {result.name} 관련 상품
                 </p>
                 <a
-                  href={`https://www.coupang.com/np/search?q=${encodeURIComponent(result.coupangKeyword)}`}
+                  href={`https://link.coupang.com/a/AF9884339?url=${encodeURIComponent('https://www.coupang.com/np/search?q=' + encodeURIComponent(result.coupangKeyword))}`}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="flex items-center justify-between p-3 rounded-lg bg-muted hover:bg-accent transition-colors group"
